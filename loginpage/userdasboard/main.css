@@ -1,0 +1,186 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url("https://www.cityofparramatta.nsw.gov.au/sites/council/files/2020-09/shutterstock_1017025384.jpg") no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* Dim background */
+  backdrop-filter: blur(5px);
+  z-index: -1;
+}
+
+/* Navbar Styles */
+nav {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(5px);
+  padding: 15px 50px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Logo */
+.logo {
+  font-size: 1.6em;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Menu */
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.menu li {
+  position: relative;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: #000;
+  font-size: 1.1em;
+  font-weight: normal; /* Not bold */
+  font-family: 'Segoe UI', sans-serif;
+  transition: color 0.3s ease;
+}
+
+.menu li a:hover {
+  color: #007acc;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.97);
+  padding: 10px 0;
+  list-style: none;
+  min-width: 160px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+}
+
+.dropdown-menu li a {
+  padding: 10px 20px;
+  display: block;
+  font-size: 0.95em;
+  white-space: nowrap;
+  color: #333;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f2f2f2;
+  color: #007acc;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+.hero-section {
+  margin-top: 10px; /* Offset from fixed navbar */
+  padding: 60px 20px;
+  text-align: center;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.hero-content h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.hero-content p {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-bar {
+  padding: 12px 20px;
+  width: 80%;
+  max-width: 400px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1em;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.search-bar:focus {
+  outline: none;
+  box-shadow: 0 0 10px #007acc;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.search-form button {
+  padding: 12px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 25px;
+  background-color: #007acc;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-form button:hover {
+  background-color: #005b99;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+  font-size: 0.9em;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
