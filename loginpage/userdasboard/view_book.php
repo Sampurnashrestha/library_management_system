@@ -7,13 +7,38 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
-$selected_category = isset($_GET['category']) ? $_GET['category'] : 'ALL';
+$email = $_SESSION['email'];
+$message = "";
 
+// Handle issue book request
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book_id']) && isset($_POST['category'])) {
+    $book_id = intval($_POST['book_id']);
+    $category = $_POST['category'];
+    $issue_date = date("Y-m-d");
+    $return_date = date("Y-m-d", strtotime("+7 days"));
+
+    // Check if already issued
+    $check = mysqli_query($connection, "SELECT * FROM issued_books WHERE user_email='$email' AND book_id=$book_id AND category='$category' AND status='issued'");
+    if (mysqli_num_rows($check) > 0) {
+        $message = "⚠️ You already issued this book.";
+    } else {
+        // Insert issue record
+        $sql = "INSERT INTO issued_books (user_email, category, book_id, issue_date, return_date, status)
+                VALUES ('$email', '$category', '$book_id', '$issue_date', '$return_date', 'issued')";
+        if (mysqli_query($connection, $sql)) {
+            $message = "✅ Book issued successfully!";
+        } else {
+            $message = "❌ Error: " . mysqli_error($connection);
+        }
+    }
+}
+
+// Load books
+$selected_category = isset($_GET['category']) ? $_GET['category'] : 'ALL';
 $tables = ['BBA', 'BCSIT', 'BHM'];
 $all_books = [];
 
 if ($selected_category !== 'ALL' && in_array($selected_category, $tables)) {
-    // Only search in the selected category
     $sql = "SELECT id, book_name, author, quantity, image FROM $selected_category";
     $result = $connection->query($sql);
     if ($result && $result->num_rows > 0) {
@@ -23,7 +48,6 @@ if ($selected_category !== 'ALL' && in_array($selected_category, $tables)) {
         }
     }
 } else {
-    // Load all books from all categories
     foreach ($tables as $table) {
         $sql = "SELECT id, book_name, author, quantity, image FROM $table";
         $result = $connection->query($sql);
@@ -52,38 +76,25 @@ if ($selected_category !== 'ALL' && in_array($selected_category, $tables)) {
     gap: 20px;
     margin-top: 30px;
   }
-
   .book-card {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    width: 160px; /* smaller width */
+    width: 170px;
     text-align: center;
+    transition: transform 0.3s;
   }
-
+  .book-card:hover { transform: translateY(-5px); }
   .book-card img {
     width: 100%;
-    height: 180px; /* smaller height */
+    height: 180px;
     object-fit: cover;
     border-bottom: 1px solid #ccc;
   }
-
-  .book-card .info {
-    padding: 8px;
-  }
-
-  .book-card h3 {
-    font-size: 0.95em;
-    margin: 4px 0;
-  }
-
-  .book-card p {
-    margin: 3px 0;
-    font-size: 0.85em;
-    color: #333;
-  }
-
+  .book-card .info { padding: 8px; }
+  .book-card h3 { font-size: 0.95em; margin: 4px 0; }
+  .book-card p { margin: 3px 0; font-size: 0.85em; color: #333; }
   .category-badge {
     background-color: #007acc;
     color: white;
@@ -93,20 +104,37 @@ if ($selected_category !== 'ALL' && in_array($selected_category, $tables)) {
     margin-bottom: 6px;
     display: inline-block;
   }
-
   .search-form {
     text-align: center;
     margin-top: 30px;
   }
-
   .search-form select,
   .search-form button {
-    padding: 5px 10px;
+    padding: 6px 12px;
     font-size: 0.95em;
     margin-left: 8px;
+    border-radius: 6px;
   }
-</style>
-
+  .issue-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.8em;
+    margin-top: 5px;
+  }
+  .issue-btn:hover {
+    background-color: #218838;
+  }
+  .msg {
+    text-align: center;
+    font-weight: bold;
+    color: #007acc;
+    margin-top: 20px;
+  }
+  </style>
 </head>
 <body>
 
@@ -116,7 +144,6 @@ if ($selected_category !== 'ALL' && in_array($selected_category, $tables)) {
     <ul class="menu">
       <li class="dropdown"><a href="../userdasboard/front.php">Dashboard</a></li>
       <li class="dropdown"><a href="../userdasboard/view_book.php">Books</a></li>
-
       <li class="dropdown">
         <a href="#">Account</a>
         <ul class="dropdown-menu">
@@ -131,6 +158,10 @@ if ($selected_category !== 'ALL' && in_array($selected_category, $tables)) {
 
 <div class="content-container">
   <h2 style="text-align:center;">Available Books</h2>
+
+  <?php if ($message): ?>
+    <p class="msg"><?= $message ?></p>
+  <?php endif; ?>
 
   <form method="GET" class="search-form">
     <label for="category">Filter by Category:</label>
@@ -153,6 +184,13 @@ if ($selected_category !== 'ALL' && in_array($selected_category, $tables)) {
             <h3><?= htmlspecialchars($book['book_name']) ?></h3>
             <p>👤 <?= htmlspecialchars($book['author']) ?></p>
             <p>📦 Quantity: <?= $book['quantity'] ?></p>
+            
+            <!-- Issue Book Button -->
+            <form method="POST" style="margin-top:5px;">
+              <input type="hidden" name="book_id" value="<?= $book['id'] ?>">
+              <input type="hidden" name="category" value="<?= $book['category'] ?>">
+              <button type="submit" class="issue-btn">📘 Issue Book</button>
+            </form>
           </div>
         </div>
       <?php endforeach; ?>

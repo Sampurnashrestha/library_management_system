@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="admin.css" />
+  <link rel="stylesheet" href="./admin1.css" />
 </head>
 <body>
   <?php
@@ -25,7 +25,8 @@ if ($row = $result->fetch_assoc()) {
     <ul class="admin-menu">
       <li><a href="../admin/admindasboard.php">Dashboard</a></li>
       <li><a href="../admin/manageuser.php">Users</a></li>
-      <li><a href="../admin/issuedbook.php">Books</a></li>
+      <li><a href="../admin/book.php">Books</a></li>
+      <li><a href="../admin/issuedbook.php">Issued Books</a></li>
       <li><a href="../admin/adminlogin.php">Logout</a></li>
     </ul>
   </nav>

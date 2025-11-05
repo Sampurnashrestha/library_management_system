@@ -5,8 +5,8 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: url("https://www.cityofparramatta.nsw.gov.au/sites/council/files/2020-09/shutterstock_1017025384.jpg") no-repeat center center fixed;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url("../image/images.jpeg") no-repeat center center fixed;
   background-size: cover;
   display: flex;
   justify-content: center;
@@ -18,6 +18,7 @@ body {
 body::before {
   content: "";
   position: absolute;
+  
   inset: 0;
   background: rgba(0, 0, 0, 0.4); 
   backdrop-filter: blur(10px);

@@ -11,7 +11,7 @@ html, body {
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: url("https://www.cityofparramatta.nsw.gov.au/sites/council/files/2020-09/shutterstock_1017025384.jpg") no-repeat center center fixed;
+  background: url(../image/images.jpeg);
   background-size: cover;
   display: flex;
   flex-direction: column;

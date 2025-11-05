@@ -64,7 +64,8 @@ $result = $connection->query($sql);
     <ul class="admin-menu">
       <li><a href="../admin/admindasboard.php">Dashboard</a></li>
       <li><a href="../admin/manageuser.php">Users</a></li>
-      <li><a href="#">Books</a></li>
+      <li><a href="../admin/book.php">Books</a></li>
+      <li><a href="../admin/issuedbook.php">Issued Books</a></li>
       <li><a href="../admin/adminlogin.php">Logout</a></li>
     </ul>
   </nav>

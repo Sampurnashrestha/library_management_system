@@ -15,10 +15,11 @@ $result = $connection->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Manage Issued Books</title>
-  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="admin1.css">
   <style>
     .main-wrapper {
       flex: 1;
@@ -36,7 +37,8 @@ $result = $connection->query($sql);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
 
-    .issue-table th, .issue-table td {
+    .issue-table th,
+    .issue-table td {
       padding: 14px;
       text-align: center;
       border-bottom: 1px solid #ccc;
@@ -67,14 +69,16 @@ $result = $connection->query($sql);
     }
   </style>
 </head>
+
 <body>
   <nav class="admin-nav">
     <div class="logo">📚 Admin Dashboard</div>
     <ul class="admin-menu">
       <li><a href="../admin/admindasboard.php">Dashboard</a></li>
       <li><a href="../admin/manageuser.php">Users</a></li>
-      <li><a href="#">Books</a></li>
-      <li><a href="adminlogin.php">Logout</a></li>
+      <li><a href="../admin/book.php">Books</a></li>
+      <li><a href="../admin/issuedbook.php">Issued Books</a></li>
+      <li><a href="../admin/adminlogin.php">Logout</a></li>
     </ul>
   </nav>
 
@@ -105,8 +109,7 @@ $result = $connection->query($sql);
             <td><?= $row['return_date'] ?></td>
             <td>
               <a href="../admin/return_book.php?id=<?= $row['id'] ?>" class="action-btn"
-                 onclick="return confirm('Are you sure you want to return this book?')"
-                 >Return</a>
+                onclick="return confirm('Are you sure you want to return this book?')">Return</a>
             </td>
           </tr>
         <?php endwhile; ?>
@@ -122,4 +125,5 @@ $result = $connection->query($sql);
     &copy; 2025 Online Library Admin Dashboard. All rights reserved.
   </footer>
 </body>
+
 </html>
